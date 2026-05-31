@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tugas 13 – Daftar & Tambah Barang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== AUTH SECTION ===== -->
+  <section id="auth-section">
+    <div class="auth-card">
+      <div class="logo">
+        <span class="logo-icon">📦</span>
+        <h1>StokApp</h1>
+        <p>Manajemen Barang Sederhana</p>
+      </div>
+
+      <!-- Tab -->
+      <div class="tab-switch">
+        <button class="tab-btn active" id="btn-login-tab" onclick="switchTab('login')">Login</button>
+        <button class="tab-btn" id="btn-register-tab" onclick="switchTab('register')">Daftar</button>
+      </div>
+
+      <!-- Form Login -->
+      <form id="form-login" onsubmit="handleLogin(event)">
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" id="login-username" placeholder="Masukkan username" required />
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="Masukkan password" required />
+        </div>
+        <button type="submit" class="btn-primary" id="btn-login">Masuk</button>
+        <p class="msg" id="msg-login"></p>
+      </form>
+
+      <!-- Form Register -->
+      <form id="form-register" class="hidden" onsubmit="handleRegister(event)">
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" id="reg-username" placeholder="Buat username" required />
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="reg-password" placeholder="Buat password (min 6 karakter)" required />
+        </div>
+        <button type="submit" class="btn-primary" id="btn-register">Daftar Sekarang</button>
+        <p class="msg" id="msg-register"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== DASHBOARD SECTION ===== -->
+  <section id="dashboard-section" class="hidden">
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="logo-icon">📦</span>
+        <span class="app-name">StokApp</span>
+      </div>
+      <div class="topbar-right">
+        <span id="welcome-user">👋 Halo, User!</span>
+        <button class="btn-logout" onclick="handleLogout()">Keluar</button>
+      </div>
+    </header>
+
+    <div class="dashboard-container">
+      <!-- Form Tambah Barang -->
+      <div class="card form-card">
+        <h2>➕ Tambah Barang</h2>
+        <form id="form-tambah" onsubmit="handleTambah(event)">
+          <div class="form-grid">
+            <div class="input-group">
+              <label>Nama Barang</label>
+              <input type="text" id="item-nama" placeholder="cth: Laptop Asus" required />
+            </div>
+            <div class="input-group">
+              <label>Kategori</label>
+              <select id="item-kategori" required>
+                <option value="">-- Pilih Kategori --</option>
+                <option value="Elektronik">Elektronik</option>
+                <option value="Furnitur">Furnitur</option>
+                <option value="Pakaian">Pakaian</option>
+                <option value="Makanan">Makanan</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Jumlah</label>
+              <input type="number" id="item-jumlah" placeholder="0" min="1" required />
+            </div>
+            <div class="input-group">
+              <label>Keterangan</label>
+              <input type="text" id="item-keterangan" placeholder="Opsional..." />
+            </div>
+          </div>
+          <button type="submit" class="btn-primary" id="btn-tambah">Tambah Barang</button>
+          <p class="msg" id="msg-tambah"></p>
+        </form>
+      </div>
+
+      <!-- Daftar Barang -->
+      <div class="card list-card">
+        <div class="list-header">
+          <h2>📋 Daftar Barang</h2>
+          <span class="badge" id="jumlah-badge">0 item</span>
+        </div>
+        <div id="barang-list">
+          <div class="empty-state">
+            <span>📭</span>
+            <p>Belum ada barang. Tambahkan sekarang!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
