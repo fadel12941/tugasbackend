@@ -132,7 +132,10 @@ function handleLogout() {
 async function loadBarang() {
   try {
     var res = await fetch(API_URL + '/barang.php', {
-      headers: { Authorization: 'Bearer ' + TOKEN },
+      headers: { 
+        'Authorization': 'Bearer ' + TOKEN,
+        'X-Authorization': 'Bearer ' + TOKEN
+      },
     });
 
     if (res.status === 401 || res.status === 403) {
@@ -196,7 +199,8 @@ async function handleTambah(e) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + TOKEN,
+        'Authorization': 'Bearer ' + TOKEN,
+        'X-Authorization': 'Bearer ' + TOKEN
       },
       body: JSON.stringify({ nama: nama, kategori: kategori, jumlah: parseInt(jumlah), keterangan: keterangan }),
     });
@@ -224,7 +228,10 @@ async function hapusBarang(id) {
   try {
     var res = await fetch(API_URL + '/barang.php?id=' + id, {
       method: 'DELETE',
-      headers: { Authorization: 'Bearer ' + TOKEN },
+      headers: { 
+        'Authorization': 'Bearer ' + TOKEN,
+        'X-Authorization': 'Bearer ' + TOKEN
+      },
     });
 
     if (res.ok) {

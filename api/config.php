@@ -13,11 +13,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// Default XAMPP MySQL Configuration (Bisa diubah saat hosting)
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'tugas_pertemuan13');
+// Cek apakah berjalan di localhost atau di server hosting (InfinityFree)
+if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1') {
+    // Konfigurasi XAMPP Lokal
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+    define('DB_NAME', 'tugas_pertemuan13');
+} else {
+    // Konfigurasi InfinityFree Online
+    define('DB_HOST', 'sql301.infinityfree.com');
+    define('DB_USER', 'if0_42063297');
+    define('DB_PASS', 'MASUKKAN_PASSWORD_DISINI'); // Ganti dengan password MySQL InfinityFree Anda
+    define('DB_NAME', 'if0_42063297_tugasbackend');
+}
 
 function getDB() {
     $db = null;
@@ -77,10 +86,21 @@ function jsonResponse($code, $data) {
 
 // Ambil Authorization header (kompatibel dengan shared hosting)
 function getAuthorizationHeader() {
+    // Cek custom header X-Authorization (menghindari Apache stripping di InfinityFree)
+    if (isset($_SERVER['HTTP_X_AUTHORIZATION'])) {
+        return $_SERVER['HTTP_X_AUTHORIZATION'];
+    }
+    if (isset($_SERVER['REDIRECT_HTTP_X_AUTHORIZATION'])) {
+        return $_SERVER['REDIRECT_HTTP_X_AUTHORIZATION'];
+    }
+
     if (function_exists('getallheaders')) {
         $headers = getallheaders();
         foreach ($headers as $key => $value) {
             if (strtolower($key) === 'authorization') {
+                return $value;
+            }
+            if (strtolower($key) === 'x-authorization') {
                 return $value;
             }
         }
