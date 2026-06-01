@@ -1,4 +1,4 @@
-const API_URL = '/api';
+const API_URL = '../api';
 let TOKEN = localStorage.getItem('token') || null;
 let USERNAME = localStorage.getItem('username') || null;
 
@@ -60,7 +60,7 @@ async function handleRegister(e) {
   btn.textContent = 'Mendaftarkan...';
 
   try {
-    var res = await fetch(API_URL + '/register', {
+    var res = await fetch(API_URL + '/register.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: username, password: password }),
@@ -94,7 +94,7 @@ async function handleLogin(e) {
   btn.textContent = 'Masuk...';
 
   try {
-    var res = await fetch(API_URL + '/login', {
+    var res = await fetch(API_URL + '/login.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: username, password: password }),
@@ -131,7 +131,7 @@ function handleLogout() {
 // ===== LOAD BARANG =====
 async function loadBarang() {
   try {
-    var res = await fetch(API_URL + '/barang', {
+    var res = await fetch(API_URL + '/barang.php', {
       headers: { Authorization: 'Bearer ' + TOKEN },
     });
 
@@ -192,7 +192,7 @@ async function handleTambah(e) {
   btn.textContent = 'Menyimpan...';
 
   try {
-    var res = await fetch(API_URL + '/barang', {
+    var res = await fetch(API_URL + '/barang.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -222,7 +222,7 @@ async function hapusBarang(id) {
   if (!confirm('Yakin ingin menghapus barang ini?')) return;
 
   try {
-    var res = await fetch(API_URL + '/barang/' + id, {
+    var res = await fetch(API_URL + '/barang.php?id=' + id, {
       method: 'DELETE',
       headers: { Authorization: 'Bearer ' + TOKEN },
     });
@@ -244,6 +244,7 @@ function showMsg(el, text, type) {
   el.className = 'msg ' + type;
 }
 
+// Clear message
 function clearMsg(id) {
   var el = document.getElementById(id);
   if (el) { el.textContent = ''; el.className = 'msg'; }
